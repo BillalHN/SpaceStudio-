@@ -38,7 +38,7 @@
             document.getElementById('status').innerText = 'Generating...';
             
             try {
-                const response = await fetch(`http://127.0.0.1:8000/generate-custom/?prompt=${encodeURIComponent(prompt)}`);
+                const response = await fetch(`https://multiramous-carolin-inhalingly.ngrok-free.dev/generate-custom/?prompt=${encodeURIComponent(prompt)}`);
                 const data = await response.json();
                 
                 const audio = document.getElementById('audioSource');
@@ -52,4 +52,5 @@
         }
     </script>
 </body>
+
 </html>
