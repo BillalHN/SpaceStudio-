@@ -1,57 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Billal's AI Music Studio</title>
-    <style>
-        body { background: #0f172a; color: #38bdf8; text-align: center; font-family: 'Inter', sans-serif; padding: 50px; }
-        .container { max-width: 600px; margin: auto; background: #1e293b; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        textarea { width: 90%; padding: 15px; border-radius: 10px; background: #0f172a; color: white; border: 1px solid #38bdf8; margin: 10px 0; font-size: 16px; }
-        .btn { padding: 15px 30px; background: #38bdf8; color: #0f172a; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
-        .btn:hover { background: #7dd3fc; transform: translateY(-2px); }
-        #loader { display: none; color: #facc15; margin-top: 15px; font-weight: bold; }
-        audio { width: 100%; margin-top: 20px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>AI Music Master Studio</h1>
-        <p>Studio Status: <span id="status" style="color:#4ade80;">Online</span></p>
-        
-        <textarea id="userPrompt" placeholder="Ex: Emotional piano for short film / Lo-fi beat for vlog..."></textarea>
-        
-        <button class="btn" onclick="generateMusic()">GENERATE MUSIC</button>
-        
-        <div id="loader">AI is thinking and composing... (1-2 mins)</div>
-        
-        <div id="player" style="display:none; margin-top: 20px;">
-            <p>Your Production-Ready Audio:</p>
-            <audio id="audioSource" controls></audio>
-        </div>
-    </div>
+try {
+            const response = await fetch(`https://multiramous-carolin-inhalingly.ngrok-free.dev/generate-custom/?prompt=${encodeURIComponent(prompt)}`);
+            const data = await response.json();
 
-    <script>
-        async function generateMusic() {
-            const prompt = document.getElementById('userPrompt').value;
-            if(!prompt) return alert("Please type what kind of music you want!");
-
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('status').innerText = 'Generating...';
+            const audio = document.getElementById('audioSource');
+            // AI-er toiri kora music-er full link set kora
+            audio.src = `https://multiramous-carolin-inhalingly.ngrok-free.dev${data.file_url}`;
             
-            try {
-                const response = await fetch(`https://multiramous-carolin-inhalingly.ngrok-free.dev`);
-                const data = await response.json();
-                
-                const audio = document.getElementById('audioSource');
-                audio.src = 'custom_ai_music.wav?t=' + new Date().getTime();
-                document.getElementById('player').style.display = 'block';
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('status').innerText = 'Ready!';
-            } catch (error) {
-                alert("CMD Server-e somossya!");
-            }
+            const player = document.getElementById('audioPlayer');
+            player.load();
+            player.play();
+            
+            document.getElementById('status').innerText = 'Music Generated! Playing now...';
+        } catch (error) {
+            console.error('Error:', error);
+            alert('CMD Server-e somossya!');
         }
-    </script>
-</body>
-
-</html>
-
